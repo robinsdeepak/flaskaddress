@@ -9,3 +9,8 @@ class Address(Base):
     name = Column(String)
     lat = Column(Float)
     long = Column(Float)
+
+    def __str__(self):
+        return str(
+            {"id": self.id, "name": self.name, "lat": self.lat, "long": self.long}
+        )
