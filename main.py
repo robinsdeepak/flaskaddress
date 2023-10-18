@@ -1,5 +1,4 @@
-from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import FastAPI, HTTPException
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import IntegrityError
 
@@ -21,10 +20,15 @@ def create_address(address: schemas.AddressCreate):
     Args:
         address (schemas.AddressCreate): Address Schema object
     """
-    # create address
-    address_obj = models.Address.create(**address.dict())
-    logger.info(f"Created address: {address_obj}")
-    return address_obj
+    try:
+        # create address
+        address_obj = models.Address.create(**address.dict())
+        logger.info(f"Created address: {address_obj}")
+        return address_obj
+    except IntegrityError:
+        # Raise 400 if address already exists
+        logger.error("Address already exists")
+        raise HTTPException(status_code=400, detail="Address already exists")
 
 
 @app.get("/addresses/", response_model=list[schemas.Address])

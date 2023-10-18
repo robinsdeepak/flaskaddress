@@ -1,4 +1,4 @@
-import os, logging, errno
+import logging
 from logging import handlers
 
 

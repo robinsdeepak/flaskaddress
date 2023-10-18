@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float
 from database import Base
 from database import SessionLocal
+from sqlalchemy import UniqueConstraint
 
 
 class CRUDMixin:
@@ -39,6 +40,8 @@ class CRUDMixin:
 
 class Address(Base, CRUDMixin):
     __tablename__ = "address"
+
+    __table_args__ = (UniqueConstraint("lat", "long"),)
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)

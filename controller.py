@@ -1,8 +1,5 @@
 from geopy.distance import geodesic
 import models
-from database import SessionLocal
-from sqlalchemy import func
-from math import radians
 
 
 def get_addresses_inrange(lat: float, long: float, radius: float):
